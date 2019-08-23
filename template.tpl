@@ -173,21 +173,20 @@ ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 
 const copyFromWindow = require ('copyFromWindow');
 const setInWindow = require('setInWindow');
+const createQueue = require ('createQueue');
 
-let _uxa = copyFromWindow('_uxa');
+let _uxaPush = createQueue('_uxa');
 
-if (_uxa === undefined) _uxa = [];
-_uxa.push(['ecommerce:addTransaction', {
+_uxaPush(['ecommerce:addTransaction', {
         'id': data.transactionID,               // mandatory  -  Transaction ID
         'revenue': data.transactionRevenue,   // mandatory  -  Transaction's total cost
         'shipping': data.transactionShipping,       // optional   -  Delivery costs
         'tax': data.transactionTax           // optional   -  Taxes costs
     }]);
-_uxa.push(['ecommerce:send']);
-setInWindow('_uxa', _uxa, true);
+_uxaPush(['ecommerce:send']);
 data.gtmOnSuccess();
 
 
 ___NOTES___
 
-Created on 19/08/2019, 14:23:52
+Created on 23/08/2019, 15:36:59
