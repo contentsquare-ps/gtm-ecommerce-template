@@ -1,6 +1,8 @@
 homepage: "https://contentsquare.com/"
 documentation: "https://docs.contentsquare.com/uxa-en/"
 versions:
+  - sha: 93be2519bad79c09dca6617e29711988ff968752
+    changeNotes: Changed e-commerce tracking command (in the code - ec)
   - sha: e38462eea1ff15d62c83a154576f7c487079f773
     changeNotes: Added currency tracking
   - sha: ee271d9186cfdc279942c286fd131352e79918ca
