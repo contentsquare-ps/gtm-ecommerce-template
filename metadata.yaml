@@ -1,7 +1,7 @@
 homepage: "https://contentsquare.com/"
 documentation: "https://docs.contentsquare.com/uxa-en/"
 versions:
-  - sha: c2705428c38603976968fec1bb7b24f58d5bd6c2
+  - sha: 64bf9599bbe70dc5f76a0d3750260433a4808063
     changeNotes: Updated Brand Name
   - sha: 93be2519bad79c09dca6617e29711988ff968752
     changeNotes: Changed e-commerce tracking command (in the code - ec)
