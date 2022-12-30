@@ -1,8 +1,8 @@
 homepage: "https://contentsquare.com/"
 documentation: "https://docs.contentsquare.com/uxa-en/"
 versions:
-  - sha: 5c68cf2aaf76878d3713fbc9bbcd8c7669d435bf
-    changeNotes: Fixing bug
+  - sha: 4cd6bfa72aee2b565e167a463afdb74f641db1d3
+    changeNotes: Removed Shipping and Tax
   - sha: 075f2fc4f6ba1bddeea6150155e34c83ceaf1d34
     changeNotes: Updated Brand Name
   - sha: 93be2519bad79c09dca6617e29711988ff968752
