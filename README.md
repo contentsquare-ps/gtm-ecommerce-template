@@ -36,6 +36,7 @@ Contentsquare is a digital experience analytics platform that helps businesses u
 - **Mandatory Parameter Support**: Enforces collection of critical transaction metrics (Transaction ID and Revenue)
 - **Optional Parameters**: Supports optional fields like currency code for more granular tracking
 - **Item-Level Tracking**: Track individual products/items within transactions
+- **Flexible Item Field Mapping**: Works out of the box with standard GA4/GTM item property names, or lets you map custom property names if your dataLayer uses a non-standard naming convention
 - **Easy Configuration**: Simple parameter mapping through GTM interface
 - **Supports Multiple Data Types**: Works with all standard GTM variable types
 
@@ -54,8 +55,8 @@ Contentsquare is a digital experience analytics platform that helps businesses u
 
 1. **Open Google Tag Manager** and navigate to your container
 2. **Go to Templates** > **Tag Templates** > **Search Gallery**
-3. **Search for** "Contentsquare E-commerce" or browse the Analytics category
-4. **Click on** "Contentsquare - E-commerce data" template
+3. **Search for** "Contentsquare Ecommerce" or browse the Analytics category
+4. **Click on** "Contentsquare - Ecommerce/Merchandising" template
 5. **Click Add to Workspace** to import the template
 6. **Accept** the Community Template Gallery Developer Terms of Service
 7. **Create a New Tag** using this template in your container
@@ -114,28 +115,48 @@ These parameters are optional and can enhance your tracking:
 
 ### Overview
 
-The transaction items section is optional but highly recommended for detailed product-level tracking. This functionality allows you to track individual products/items purchased within a transaction.
+The transaction items section is optional but highly recommended for detailed product-level tracking. This functionality loops through an array of purchased items and sends each one to Contentsquare individually, right before the transaction is sent.
 
 ### Item Parameters
 
-If implementing item-level tracking, the following data can be captured per item:
+Map the **Transaction Items** field (under the **Purchased Products** group) to a variable (e.g. a Custom JavaScript Variable) that returns an array of item objects. By default, each item object is expected to use the standard naming convention from Google's [GA4 ecommerce `items` array](https://developers.google.com/analytics/devguides/collection/ga4/ecommerce):
 
-- **Product ID**: Unique identifier for the product
-- **Product Name**: Name of the product
-- **Category**: Product category
-- **Price**: Unit price of the product
-- **Quantity**: Number of units purchased
+| Field | Description | Required |
+|-------|-------------|----------|
+| **item_id** | Product code / SKU (string) | Yes |
+| **price** | Unit price actually paid (string/number) | Yes |
+| **quantity** | Quantity | Yes |
+| **item_name** | Product name (string) | Yes |
+| **item_category** | Product category (string) | No |
+
+### Custom Item Field Names
+
+If your dataLayer doesn't follow the standard `item_id` / `item_name` / `item_category` / `price` / `quantity` naming convention, you can tell the tag which property to read for each field instead of renaming your dataLayer. Under **Purchased Products**, fill in any of these optional text fields with the actual property name used in your item objects:
+
+| Parameter | Overrides property | Example |
+|-----------|--------------------|---------|
+| **Product ID (SKU)** | `item_id` | `sku` |
+| **Product Name** | `item_name` | `productName` |
+| **Product Category (optional)** | `item_category` | `productCategory` |
+| **Product Price** | `price` | `unitPrice` |
+| **Product Quantity** | `quantity` | `qty` |
+
+Any field left blank falls back to the standard property name.
 
 ### Configuration
 
-For detailed item-level implementation instructions:
+1. **Build a variable** (typically a Custom JavaScript Variable) that reads your ecommerce dataLayer and returns an array shaped like:
+   ```js
+   [
+     { item_id: "123ABC", price: "9.99", quantity: "1", item_name: "Black scarf", item_category: "Scarves" },
+     { item_id: "456DEF", price: "19.99", quantity: "2", item_name: "Red beanie", item_category: "Hats" }
+   ]
+   ```
+   If your items use different property names (e.g. `sku` instead of `item_id`), keep the array shaped however your dataLayer already provides it and set the matching override in [Custom Item Field Names](#custom-item-field-names) instead of transforming the data.
+2. **Map that variable** to the **Transaction Items** parameter in the tag configuration
+3. **Test item tracking** in GTM Preview mode - each item is pushed via `ec:transaction:items:add` before the final `ec:transaction:send`
 
-1. **Contact your Implementation Manager** at Contentsquare
-2. **Prepare your item data** in a structured array format
-3. **Map item variables** in the template configuration
-4. **Test item tracking** in GTM Preview mode
-
-**Note**: Item tracking requires additional setup and coordination with your Contentsquare account team.
+**Note**: Leave the Transaction Items field empty to skip item-level tracking.
 
 ---
 
@@ -146,6 +167,7 @@ For detailed item-level implementation instructions:
 - **Contentsquare Website**: [https://contentsquare.com/](https://contentsquare.com/)
 - **Documentation**: [https://docs.contentsquare.com/uxa-en/](https://docs.contentsquare.com/uxa-en/)
 - **GTM Community Templates**: Available in Google Tag Manager's template gallery
+- **GA4 Ecommerce `items` array reference**: [https://developers.google.com/analytics/devguides/collection/ga4/ecommerce](https://developers.google.com/analytics/devguides/collection/ga4/ecommerce) - the standard `item_id`/`item_name`/`item_category`/`price`/`quantity` naming convention used by this template's [Transaction Items](#transaction-items) parameter is based on this Google format
 
 ### Getting Help
 
@@ -162,12 +184,16 @@ For implementation support or questions:
 
 | Version | Date | Changes |
 |---------|------|---------|
-| 1.2 | Current | Updated company logo |
+| 2.0 | Current | Renamed template to "Contentsquare - Ecommerce/Merchandising"; added item-level tracking (loops through a Transaction Items array and sends each item before the transaction) with support for custom item property name mapping |
+| 1.2 | - | Updated company logo |
 | 1.1 | - | Removed Shipping and Tax fields |
 | 1.0 | - | Updated Brand Name; Changed e-commerce tracking command; Added currency tracking |
 | 0.1 | - | First Version |
 
 **Recent Updates**:
+- Renamed the template in the Community Template Gallery to "Contentsquare - Ecommerce/Merchandising"
+- Added item-level tracking via a new Transaction Items parameter
+- Added support for mapping custom item property names (for dataLayers that don't follow the standard `item_id`/`item_name`/`item_category`/`price`/`quantity` naming)
 - Updated company logo for brand consistency
 - Removed Shipping and Tax parameters (use Revenue for total)
 - Enhanced currency support with ISO currency codes
