@@ -184,7 +184,7 @@ For implementation support or questions:
 
 | Version | Date | Changes |
 |---------|------|---------|
-| 2.0 | Current | Renamed template to "Contentsquare - Ecommerce/Merchandising"; added item-level tracking (loops through a Transaction Items array and sends each item before the transaction) with support for custom item property name mapping |
+| 1.3 | Current | Renamed template to "Contentsquare - Ecommerce/Merchandising"; added item-level tracking (loops through a Transaction Items array and sends each item before the transaction) with support for custom item property name mapping |
 | 1.2 | - | Updated company logo |
 | 1.1 | - | Removed Shipping and Tax fields |
 | 1.0 | - | Updated Brand Name; Changed e-commerce tracking command; Added currency tracking |
