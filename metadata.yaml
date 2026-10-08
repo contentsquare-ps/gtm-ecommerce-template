@@ -1,7 +1,7 @@
 homepage: "https://contentsquare.com/"
 documentation: "https://docs.contentsquare.com/en/web/ecommerce-tag/"
 versions:
-  - sha: 47c338609771b2d75c78127a19a571a95157b8f8
+  - sha: f22e8c7d4d289dd6308c9c620677c761a0ef79ce
     changeNotes: Renamed template to "Contentsquare - Ecommerce/Merchandising"; added item-level tracking via a new Transaction Items parameter, with support for custom item property names
   - sha: 1b9483c0b2206a257bc87782ff29dab72e61f3c1
     changeNotes: Updated company logo
